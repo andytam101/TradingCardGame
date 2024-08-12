@@ -16,6 +16,7 @@ class Game:
             bid_ask_spread=3,
             price_interval=10,
             starting_budget=500,
+            reshuffle=True,
             display=False
         ):
         self.cards = []
@@ -30,13 +31,18 @@ class Game:
         self.price_interval = price_interval
         self.starting_budget = starting_budget
 
+        self.reshuffle = reshuffle
+
         self.display = display
 
-    def setup(self, factories):
+    def reset_cards(self):
+        self.cards.clear()
         for i in range(2, 15):
             self.cards += [i] * 4
         random.shuffle(self.cards)
 
+    def setup(self, factories):
+        self.reset_cards()
         for f in factories:
             self.players.append(f(self.card_count, self.rounds, self.starting_budget))
 
@@ -96,6 +102,9 @@ class Game:
     def run(self):
         for i in range(self.rounds):
             target_price, buy_price, sell_price = self.run_one_round()
+            if self.reshuffle:
+                self.reset_cards()
+
             if self.display:
                 self.display_money(target_price, buy_price, sell_price, i)
 

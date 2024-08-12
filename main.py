@@ -16,6 +16,7 @@ def one_game():
     game.setup(ALL_FACTORIES)
     return game.run()
 
+
 def main(games_count=1):
     win_count = {}
     for i in range(games_count):
@@ -31,6 +32,7 @@ def main(games_count=1):
         
     print(f"Complete.")
     display_result(games_count, win_count)
+
 
 def display_result(total_count, win_count):
     print("=======================================")
