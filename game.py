@@ -76,7 +76,7 @@ class Game:
             try:
                 buy, number = p.decide(visible_cards, buy_price, sell_price)
                 number = max(0, number)
-                
+
                 actual_price = buy_price if buy else sell_price
                 
                 if actual_price * number > self.money[p]:
@@ -115,7 +115,7 @@ class Game:
             print(f"{p.name}: {self.money[p]}")
 
     def get_winner(self):
-        return max(self.players, key=lambda x: self.money[x]).name
+        return max(self.players, key=lambda x: self.money[x])
         
 
 if __name__ == "__main__":
