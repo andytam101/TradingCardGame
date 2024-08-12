@@ -16,7 +16,6 @@ class Game:
             bid_ask_spread=3,
             price_interval=10,
             starting_budget=500,
-            penalty_amount=50,
             display=False
         ):
         self.cards = []
@@ -30,8 +29,6 @@ class Game:
         self.bid_ask_spread = bid_ask_spread
         self.price_interval = price_interval
         self.starting_budget = starting_budget
-
-        self.penalty_amount=penalty_amount
 
         self.display = display
 
@@ -62,8 +59,8 @@ class Game:
             return -diff
 
     def penalty(self, p):
-        self.money[p] -= self.penalty_amount
-        p.set_budget(self.money[p])
+        self.money[p] = 0
+        p.set_budget(0)
 
     def run_one_round(self):
         cards = self.randomly_pick_cards()
@@ -78,6 +75,8 @@ class Game:
         for p in self.players:
             try:
                 buy, number = p.decide(visible_cards, buy_price, sell_price)
+                number = max(0, number)
+                
                 actual_price = buy_price if buy else sell_price
                 
                 if actual_price * number > self.money[p]:
