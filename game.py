@@ -1,6 +1,7 @@
 import random
 from players.AlwaysBuy1 import buildAlwaysBuy1
 from players.AlwaysSell1 import buildAlwaysSell1
+from players.AlwaysBuy1000 import buildAlwaysBuy1000
 
 
 class InsufficientFundsException(Exception):
@@ -88,8 +89,6 @@ class Game:
                 p.reveal(nums_in_play)
             except InsufficientFundsException as e:
                 self.penalty(p)
-                if self.display:
-                    print(f"{p} has insufficient funds for their action")
             except Exception as e:
                 print(e)
             
@@ -122,5 +121,5 @@ class Game:
 
 if __name__ == "__main__":
     game = Game(display=True)
-    game.setup([buildAlwaysBuy1, buildAlwaysSell1])
+    game.setup([buildAlwaysBuy1, buildAlwaysSell1, buildAlwaysBuy1000])
     winner = game.run()
