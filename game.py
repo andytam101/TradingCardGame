@@ -65,12 +65,16 @@ class Game:
         buy_price  = sell_price + random.randint(1, self.bid_ask_spread)
 
         for p in self.players:
-            buy, number = p.decide(visible_cards, buy_price, sell_price)
-            actual_price = buy_price if buy else sell_price
-            profit = self.calculate_profits(target_price, actual_price, number, buy)
-            self.money[p] += profit
-            p.reveal(nums_in_play)
-        
+            try:
+                buy, number = p.decide(visible_cards, buy_price, sell_price)
+                number = int(number)
+                actual_price = buy_price if buy else sell_price
+                profit = self.calculate_profits(target_price, actual_price, number, buy)
+                self.money[p] += profit
+                p.reveal(nums_in_play)
+            except Exception as e:
+                print(e)
+            
         return target_price, buy_price, sell_price
 
     def run(self):
