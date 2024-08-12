@@ -7,5 +7,5 @@ class AlwaysBuy1(Player):
         pass
     
 
-def buildAlwaysBuy1(card_count, round):
-    return AlwaysBuy1("Always Buy 1", card_count, round)
+def buildAlwaysBuy1(card_count, round, budget):
+    return AlwaysBuy1("Always Buy 1", card_count, round, budget)

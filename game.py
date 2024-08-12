@@ -2,6 +2,11 @@ import random
 from players.AlwaysBuy1 import buildAlwaysBuy1
 from players.AlwaysSell1 import buildAlwaysSell1
 
+
+class InsufficientFundsException(Exception):
+    pass
+
+
 class Game:
     def __init__(self, 
             card_count=3, 
@@ -52,12 +57,13 @@ class Game:
         else:
             return -diff
 
+    def penalty(self, p):
+        pass
+
     def run_one_round(self):
         cards = self.randomly_pick_cards()
         visible_cards = list(map(lambda x: x[0], filter(lambda x: x[1], cards)))
-        print(visible_cards)
         nums_in_play = list(map(lambda x: x[0], cards))
-        print(nums_in_play)
 
         target_price = sum(nums_in_play)
         sell_price = random.randint(max(0, target_price - self.price_interval - self.bid_ask_spread // 2),
@@ -67,11 +73,17 @@ class Game:
         for p in self.players:
             try:
                 buy, number = p.decide(visible_cards, buy_price, sell_price)
-                number = int(number)
                 actual_price = buy_price if buy else sell_price
+                
+                if actual_price * number > self.money[p]:
+                    raise InsufficientFundsException
+                
                 profit = self.calculate_profits(target_price, actual_price, number, buy)
                 self.money[p] += profit
+                p.set_budget(self.money[p])
                 p.reveal(nums_in_play)
+            except InsufficientFundsException as e:
+                print(f"{p} has insufficient funds for their action")
             except Exception as e:
                 print(e)
             
