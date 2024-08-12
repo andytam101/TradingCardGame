@@ -32,7 +32,7 @@ class Game:
         random.shuffle(self.cards)
 
         for f in factories:
-            self.players.append(f(self.card_count, self.rounds))
+            self.players.append(f(self.card_count, self.rounds, self.starting_budget))
 
         for p in self.players:
             self.money[p] = self.starting_budget
@@ -55,7 +55,9 @@ class Game:
     def run_one_round(self):
         cards = self.randomly_pick_cards()
         visible_cards = list(map(lambda x: x[0], filter(lambda x: x[1], cards)))
+        print(visible_cards)
         nums_in_play = list(map(lambda x: x[0], cards))
+        print(nums_in_play)
 
         target_price = sum(nums_in_play)
         sell_price = random.randint(max(0, target_price - self.price_interval - self.bid_ask_spread // 2),

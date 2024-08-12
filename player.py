@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
 
 class Player(ABC):
-    def __init__(self, name, card_count, rounds):
+    def __init__(self, name, card_count, rounds, budget):
         self.card_count = card_count
         self.rounds = rounds
         self.name = name
+        self.budget = budget
 
     def __repr__(self):
         return self.name
