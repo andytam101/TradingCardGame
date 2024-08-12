@@ -2,6 +2,7 @@ import random
 from players.AlwaysBuy1 import buildAlwaysBuy1
 from players.AlwaysSell1 import buildAlwaysSell1
 from players.AlwaysBuy1000 import buildAlwaysBuy1000
+from players.Andy import buildAndy
 
 
 class InsufficientFundsException(Exception):
@@ -120,7 +121,8 @@ class Game:
         print("=====================================")
         print(f"Round {round_number + 1} - target: {target_price}, buy: {buy_price}, sell: {sell_price}")
         print("Current money count: ")
-        for p in self.players:
+        players = sorted(self.players, key=lambda x: self.money[x], reverse=True)
+        for p in players:
             print(f"{p.name}: {self.money[p]}")
 
     def get_winner(self):
@@ -128,6 +130,9 @@ class Game:
         
 
 if __name__ == "__main__":
-    game = Game(display=True)
-    game.setup([buildAlwaysBuy1, buildAlwaysSell1, buildAlwaysBuy1000])
+    game = Game(
+        display=True, 
+        rounds=random.randint(50,250)
+    )
+    game.setup([buildAlwaysBuy1, buildAlwaysSell1, buildAndy])
     winner = game.run()

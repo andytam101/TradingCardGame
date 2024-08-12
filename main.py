@@ -1,18 +1,21 @@
 from game import Game
+import random
 from players.AlwaysBuy1 import buildAlwaysBuy1
 from players.AlwaysSell1 import buildAlwaysSell1
 from players.AlwaysBuy1000 import buildAlwaysBuy1000
+from players.Andy import buildAndy
 
 
 ALL_FACTORIES = [
     buildAlwaysBuy1,
     buildAlwaysSell1,
-    buildAlwaysBuy1000
+    buildAlwaysBuy1000,
+    buildAndy
 ]
 
 
 def one_game():
-    game = Game()
+    game = Game(card_count=3, rounds=random.randint(50,250))
     game.setup(ALL_FACTORIES)
     return game.run()
 
@@ -27,7 +30,7 @@ def main(games_count=1):
         else:
             win_count[winner.name] += 1
             
-        if i % 10000 == 0:
+        if i % 100 == 0:
             print(f"Game {i} finished")
         
     print(f"Complete.")
@@ -43,4 +46,5 @@ def display_result(total_count, win_count):
 
 
 if __name__ == "__main__":
-    main(games_count=10_000)
+    main(games_count=1000)
+    
