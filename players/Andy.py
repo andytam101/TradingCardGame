@@ -1,5 +1,4 @@
 from player import Player
-import random
 from itertools import combinations
 import statistics
 import math
@@ -21,7 +20,6 @@ class Andy(Player):
         self.cards.clear()
         for i in range(2, 15):
             self.cards += [i] * 4
-        random.shuffle(self.cards)
 
     def max_number(self, price):
         # add tolerance
