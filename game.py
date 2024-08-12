@@ -15,6 +15,7 @@ class Game:
             bid_ask_spread=3,
             price_interval=10,
             starting_budget=500,
+            penalty_amount=50,
             display=False
         ):
         self.cards = []
@@ -28,7 +29,9 @@ class Game:
         self.bid_ask_spread = bid_ask_spread
         self.price_interval = price_interval
         self.starting_budget = starting_budget
-        
+
+        self.penalty_amount=penalty_amount
+
         self.display = display
 
     def setup(self, factories):
@@ -58,7 +61,8 @@ class Game:
             return -diff
 
     def penalty(self, p):
-        pass
+        self.money[p] -= self.penalty_amount
+        p.set_budget(self.money[p])
 
     def run_one_round(self):
         cards = self.randomly_pick_cards()
@@ -83,7 +87,9 @@ class Game:
                 p.set_budget(self.money[p])
                 p.reveal(nums_in_play)
             except InsufficientFundsException as e:
-                print(f"{p} has insufficient funds for their action")
+                self.penalty(p)
+                if self.display:
+                    print(f"{p} has insufficient funds for their action")
             except Exception as e:
                 print(e)
             
