@@ -15,7 +15,7 @@ ALL_FACTORIES = [
 
 
 def one_game():
-    game = Game(card_count=3, rounds=random.randint(50,250))
+    game = Game(card_count=10, rounds=random.randint(50,250))
     game.setup(ALL_FACTORIES)
     return game.run()
 
@@ -47,4 +47,3 @@ def display_result(total_count, win_count):
 
 if __name__ == "__main__":
     main(games_count=1000)
-    

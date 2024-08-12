@@ -132,7 +132,8 @@ class Game:
 if __name__ == "__main__":
     game = Game(
         display=True, 
-        rounds=random.randint(50,250)
+        rounds=random.randint(50,250),
+        visible_p=0.3
     )
     game.setup([buildAlwaysBuy1, buildAlwaysSell1, buildAndy])
     winner = game.run()
