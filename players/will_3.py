@@ -30,20 +30,26 @@ class Will_3(Player):
 
         E = X/N
 
-        pred += E * (self.card_count - number_cards_visable)
+        for j in range(self.card_count - number_cards_visable):
+            pred += E
+
+            X -= E
+            N -= 1
+
+            E = X/N
 
         if buy_price <= pred:
             ## exponetial increase of per, could do with optimising for a ... 
             a = 0.5
             buy_sell = True
             diff = sell_price - pred
-            per = diff / 10
+            per = ((diff / 10)**2)**0.5
 
             adj = per**a
 
             if adj > 1:
                 adj = 1
-            units = adj *((self.budget) / buy_price) 
+            units = (adj *((self.budget) / buy_price)) - 1/2
 
             return(buy_sell,units)
         
@@ -52,11 +58,14 @@ class Will_3(Player):
             a = 0.5
             buy_sell = False
             diff = sell_price - pred
-            per = diff / 8.5
+            per = ((diff / 8.50)**2)**0.5
 
             adj = per**a
 
-            units = adj * ((self.budget) / sell_price)
+            if adj > 1:
+                adj = 1
+
+            units = (adj * ((self.budget) / sell_price) ) - 1/2
 
             return(buy_sell,units)
         

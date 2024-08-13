@@ -3,6 +3,10 @@ from players.AlwaysBuy1 import buildAlwaysBuy1
 from players.AlwaysSell1 import buildAlwaysSell1
 from players.AlwaysBuy1000 import buildAlwaysBuy1000
 from players.Andy import buildAndy
+from players.will_1 import buildWill_1
+from players.will_2 import buildWill_2
+from players.will_3 import buildWill_3
+from players.Arthur import buildArthur
 
 
 class InsufficientFundsException(Exception):
@@ -13,7 +17,7 @@ class Game:
     def __init__(self, 
             card_count=3, 
             rounds=3,
-            visible_p=0.2,
+            visible_p=0.25,
             bid_ask_spread=3,
             price_interval=10,
             starting_budget=500,
@@ -94,9 +98,10 @@ class Game:
                 p.set_budget(self.money[p])
                 p.reveal(nums_in_play)
             except InsufficientFundsException as e:
+                print(f"Player {p} exceeded the budget")
                 self.penalty(p)
             except Exception as e:
-                print(e)
+                print(f"Player {p}: {e}")
             
         return target_price, buy_price, sell_price
 
@@ -133,7 +138,7 @@ if __name__ == "__main__":
     game = Game(
         display=True, 
         rounds=random.randint(50,250),
-        visible_p=0.3
     )
-    game.setup([buildAlwaysBuy1, buildAlwaysSell1, buildAndy])
+    game.setup([buildAlwaysBuy1, buildAlwaysSell1, buildAndy, buildArthur, buildWill_1, buildWill_2, buildWill_3])
+    # game.setup([buildArthur, buildWill_1, buildWill_2, buildWill_3])
     winner = game.run()

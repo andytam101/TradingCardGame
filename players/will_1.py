@@ -30,13 +30,19 @@ class Will_1(Player):
 
         E = X/N
 
-        pred += E * (self.card_count - number_cards_visable)
+        for j in range(self.card_count - number_cards_visable):
+            pred += E
+
+            X -= E
+            N -= 1
+
+            E = X/N
 
         if buy_price <= pred:
              
             buy_sell = True
              
-            units = (self.budget) / buy_price
+            units = ((self.budget) / buy_price) - 1/2
 
             return(buy_sell,units)
         
@@ -44,7 +50,7 @@ class Will_1(Player):
 
             buy_sell = False
 
-            units = (self.budget) / sell_price
+            units = ((self.budget) / sell_price) - 1/2
 
             return(buy_sell,units)
         
