@@ -1,6 +1,5 @@
-from abc import ABC, abstractmethod
-
-class Player(ABC):
+from player import Player
+class Will_2(Player):
     def __init__(self, name, card_count, rounds, budget):
         self.card_count = card_count
         self.rounds = rounds
@@ -10,7 +9,6 @@ class Player(ABC):
     def __repr__(self):
         return self.name
 
-    @abstractmethod
     def decide(self, visible_cards, buy_price, sell_price):
         """return a tuple of (buy/sell, count), where 0 = sell and 1 = buy"""
 
@@ -57,23 +55,10 @@ class Player(ABC):
         if sell_price < pred < buy_price:
             return (buy_sell, 0)
 
-
-    @abstractmethod
     def reveal(self, cards):
         """shows the player what cards there are"""
         
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+def buildWill_2(card_count, round, budget):
+    return Will_2("Will 2", card_count, round, budget)
     
